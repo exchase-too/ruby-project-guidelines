@@ -13,8 +13,9 @@
 ActiveRecord::Schema.define(version: 3) do
 
   create_table "cars", force: :cascade do |t|
-    t.string "name"
+    t.string "model"
     t.integer "price"
+    t.string "type"
   end
 
   create_table "purchases", force: :cascade do |t|
