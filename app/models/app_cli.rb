@@ -22,14 +22,17 @@ class AppCLI
         puts "Here is our current inventory:"
     
         Car.all.each_with_index do |car,index|
-            puts "#{car.id - 2}: #{car.model} - $#{car.price}"
+            puts "#{car.id}: #{car.model} - $#{car.price}"
         end
     end
      
-    # def select_a_car_from_inventory
-    #     puts "Select the id of the book that you wanna delete:"
-    #     book_id = gets.chomp
-    #     @book = Book.find_by(id: book_id)
-    # end
-        # return cars.all.map {|c| c.name}
+    def select_a_car_from_inventory
+        puts ""
+        puts "Select the number of your DREAM CAR:"
+        inventory_id = gets.chomp
+        @car = Car.find_by(id: inventory_id)
+        puts "You've slected a #{@car.model}.  Nice choice!"
+        puts "Your bill with tax comes to $#{@car.price * 1.0825}."
+    end
+
 end

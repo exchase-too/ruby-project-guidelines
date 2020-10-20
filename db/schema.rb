@@ -14,7 +14,7 @@ ActiveRecord::Schema.define(version: 3) do
 
   create_table "cars", force: :cascade do |t|
     t.string "model"
-    t.integer "price"
+    t.float "price"
     t.string "car_type"
   end
 

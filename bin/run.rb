@@ -11,6 +11,8 @@ require_relative '../config/environment'
 new_user_welcome = AppCLI.new()
 new_user_welcome.welcome_message
 new_user_welcome.list_inventory
+new_user_welcome.select_a_car_from_inventory
+
 
 
 
