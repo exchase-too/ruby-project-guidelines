@@ -1,6 +1,7 @@
 class AppCLI
 
-    def welcome_user
+    def welcome_message
+        puts
         puts "░██╗░░░░░░░██╗███████╗██╗░░░░░░█████╗░░█████╗░███╗░░░███╗███████╗  ████████╗░█████╗░"
         puts "░██║░░██╗░░██║██╔════╝██║░░░░░██╔══██╗██╔══██╗████╗░████║██╔════╝  ╚══██╔══╝██╔══██╗"
         puts "░╚██╗████╗██╔╝█████╗░░██║░░░░░██║░░╚═╝██║░░██║██╔████╔██║█████╗░░  ░░░██║░░░██║░░██║"
@@ -14,5 +15,21 @@ class AppCLI
         puts "██╔══╝░░██║░░░░░██╔══██║░░░██║░░░██║██╔══██╗██║░░██║██║╚████║  ██║╚██╔╝██║██║░░██║░░░██║░░░██║░░██║██╔══██╗░╚═══██╗"
         puts "██║░░░░░███████╗██║░░██║░░░██║░░░██║██║░░██║╚█████╔╝██║░╚███║  ██║░╚═╝░██║╚█████╔╝░░░██║░░░╚█████╔╝██║░░██║██████╔╝"
         puts "╚═╝░░░░░╚══════╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝╚═╝░░╚═╝░╚════╝░╚═╝░░╚══╝  ╚═╝░░░░░╚═╝░╚════╝░░░░╚═╝░░░░╚════╝░╚═╝░░╚═╝╚═════╝░"
+        puts ""
     end
+
+    def list_inventory
+        puts "Here is our current inventory:"
+    
+        Car.all.each_with_index do |car,index|
+            puts "#{car.id - 2}: #{car.model} - $#{car.price}"
+        end
+    end
+     
+    # def select_a_car_from_inventory
+    #     puts "Select the id of the book that you wanna delete:"
+    #     book_id = gets.chomp
+    #     @book = Book.find_by(id: book_id)
+    # end
+        # return cars.all.map {|c| c.name}
 end
