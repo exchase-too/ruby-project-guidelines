@@ -1,4 +1,4 @@
-class Purchases < ActiveRecord::Base 
+class Purchase < ActiveRecord::Base 
     belongs_to :user
     belongs_to :car
 end
