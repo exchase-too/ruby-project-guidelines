@@ -29,7 +29,13 @@ class AppCLI
 
     def what_car_type
         prompt = TTY::Prompt.new
-        temp = prompt.select("What kind of car are you looking for?", %w(Sedan Coupe Minivan Truck))
+        new_car_type = prompt.select("What kind of car are you looking for?", %w(Sedan Coupe Minivan Truck))
+    end
+
+    def budget
+        prompt = TTY::Prompt.new
+        new_budget = prompt.select("What is your budget?", %w($0-$10,000 $10,000-$20,000 $20,000-$30,000 $30,000-$40,000 >$40,000))
+        binding.pry
     end
 
     def list_inventory
