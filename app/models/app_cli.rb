@@ -18,11 +18,25 @@ class AppCLI
         puts ""
     end
 
+    def get_user
+        print "Please enter your name, and we'll begin: "
+        new_user_name = gets.chomp
+        new_user = User.create(name: new_user_name)
+        puts ""
+        puts "Hello, #{new_user.name}!  Let's get started!"
+        puts ""
+    end
+
+    def what_car_type
+        prompt = TTY::Prompt.new
+        temp = prompt.select("What kind of car are you looking for?", %w(Sedan Coupe Minivan Truck))
+    end
+
     def list_inventory
         puts "Here is our current inventory:"
     
         Car.all.each_with_index do |car,index|
-            puts "#{car.id}: #{car.model} - $#{car.price}"
+            puts "#{car.id}: #{car.model} - $#{sprintf("%.2f", car.price)}"
         end
     end
      
@@ -31,8 +45,15 @@ class AppCLI
         puts "Select the number of your DREAM CAR:"
         inventory_id = gets.chomp
         @car = Car.find_by(id: inventory_id)
-        puts "You've slected a #{@car.model}.  Nice choice!"
-        puts "Your bill with tax comes to $#{@car.price * 1.0825}."
+        puts "You've selected a #{@car.model}.  Nice choice!"
+        # puts "Your bill with tax comes to $#{@car.price * 1.0825}."
+        puts "Your bill with tax comes to $#{sprintf("%.2f", @car.price * 1.0825)}."
+        
+        # total = @car.price * 1.0825
+        # binding.pry
+        # temp = number_to_currency(total)
+        # binding.pry
+        # puts "Your bill with tax comes to $#{@temp}."
     end
 
 end
