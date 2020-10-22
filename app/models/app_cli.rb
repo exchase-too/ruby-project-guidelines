@@ -101,7 +101,7 @@ class AppCLI
         @success_car = Car.all.find {|car| car.car_type==@new_car_type && car.price >= @new_budget_min && car.price<=@new_budget_max && car.color==@new_color && car.trim_level==@new_trim_level}
         puts "SUCCESS!  Based on your search criteria, we've selected for you a #{@success_car.color} #{@success_car.model}, with #{@success_car.trim_level} trim package!"
         puts ""
-        puts "The price is $#{@success_car.price}"
+        puts "The price is $#{sprintf("%.2f", @success_car.price)}"
         puts ""
         puts "With tax, your total comes to $#{sprintf("%.2f", @success_car.price * 1.0825)}"
         puts ""
@@ -138,5 +138,14 @@ class AppCLI
             puts "Okay, Goodbye!"
         end
     end
+
+    def analytic_all_cars
+        puts "Here is our current inventory:"
+         Car.all.each_with_index do |car,index|
+         Car.all.each do |car|
+             puts "#{car.id} #{car.model}, Color: #{car.color}, Trim: #{car.trim_level}, Price:$#{sprintf("%.2f", car.price)}"
+         end
+     end
+     
 
 end
