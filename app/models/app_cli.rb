@@ -79,13 +79,7 @@ class AppCLI
         puts ""
     end
 
-    # def list_inventory
-    #     puts "Here is our current inventory:"
-    #     #Car.all.each_with_index do |car,index|
-    #     Car.all.each do |car|
-    #         puts "#{car.id} #{car.model}, Color: #{car.color}, Trim: #{car.trim_level}, Price:$#{sprintf("%.2f", car.price)}"
-    #     end
-    # end
+
 
     # def select_a_car_from_inventory
     #     puts ""
@@ -130,7 +124,7 @@ class AppCLI
         puts ""
         if review_yes == "Yes"
             prompt2 = TTY::Prompt.new
-            @review = prompt2.select("How many stars?", %w(1 2 3 4 5))
+            @@review = prompt2.select("How many stars?", %w(1 2 3 4 5)).to_i
             puts ""
             puts "Thanks!  Goodbye!"
         else
@@ -139,13 +133,7 @@ class AppCLI
         end
     end
 
-    def analytic_all_cars
-        puts "Here is our current inventory:"
-         Car.all.each_with_index do |car,index|
-         Car.all.each do |car|
-             puts "#{car.id} #{car.model}, Color: #{car.color}, Trim: #{car.trim_level}, Price:$#{sprintf("%.2f", car.price)}"
-         end
-     end
+   
      
 
 end

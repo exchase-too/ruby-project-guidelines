@@ -23,12 +23,12 @@ require_relative '../config/environment'
 
     def average_star_rating
         puts "This is the average star rating analytic"
-        draw_prompt_table
     end
     
     def total_inventory
-        puts "This is the total inventory analytic"
-        draw_prompt_table
+        Car.all.each_with_index do |car,index|
+             puts "#{car.id} #{car.model}, Color: #{car.color}, Trim: #{car.trim_level}, Price:$#{sprintf("%.2f", car.price)}"
+        end
     end
 
     def super_user_loop
@@ -37,8 +37,10 @@ require_relative '../config/environment'
         while @analytic != "Exit"
             if @analytic == "AverageStarRating"
                 average_star_rating
+                draw_prompt_table
             elsif @analytic == "TotalInventory"
                 total_inventory
+                draw_prompt_table
             end
         end
     end    
