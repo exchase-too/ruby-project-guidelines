@@ -18,14 +18,21 @@ class AppCLI
         puts ""
     end
 
-    def get_user
+    def get_user_name
         print "Please enter your name, and we'll begin: "
-        new_user_name = gets.chomp
-        #if name = "super_user, do super_user_method"
-        #def SU_method
-        #welcome message
-        #TTY input - select an analylitc
-        @new_user = User.create(name: new_user_name)
+        @new_user_name = gets.chomp
+    end
+
+    # --------BRANCHING LOGIC GOES HERE---------
+    # if @new_user_name == "super_user"
+    #     branch to super user mode
+    # else
+    #     continue in regular user mode
+    # end
+    # --------END-------------------------------
+
+    def create_user
+        @new_user = User.create(name: @new_user_name)
         puts ""
         puts "Hello, #{@new_user.name}!  Let's get started!"
         puts ""
@@ -40,11 +47,14 @@ class AppCLI
         prompt = TTY::Prompt.new
         temp = prompt.select("What is your budget?", %w($0-$15,000 $15,000-$30,000 >$30,000))
         if temp == "$0-$15,000"
-            @new_budget = 15000.00
+            @new_budget_min = 0.00
+            @new_budget_max = 15000.00
         elsif temp == "$15,000-$30,000"
-            @new_budget = 30000.00
+            @new_budget_min = 15000.01
+            @new_budget_max = 30000.00
         else
-            @new_budget = 30000.01
+            @new_budget_min = 30000.01
+            @new_budget_max = 100000000.00
         end
         puts ""
     end
@@ -82,7 +92,7 @@ class AppCLI
     # end
     
     def return_car
-        @success_car = Car.all.find {|car| car.car_type==@new_car_type && car.price<=@new_budget && car.color==@new_color && car.trim_level==@new_trim_level}
+        @success_car = Car.all.find {|car| car.car_type==@new_car_type && car.price >= @new_budget_min && car.price<=@new_budget_max && car.color==@new_color && car.trim_level==@new_trim_level}
         puts "SUCCESS!  Based on your search criteria, we've selected for you a #{@success_car.color} #{@success_car.model}, with #{@success_car.trim_level} trim package!"
         puts ""
         puts "The price is $#{@success_car.price}"
@@ -98,7 +108,7 @@ class AppCLI
     def create_purchase
         if @confirm_new_purchase == "Yes"
             @new_purchase = Purchase.create(car_id: @success_car.id, user_id: @new_user.id)
-            puts "Congratulations!  Enjoy your new car!"
+            puts "Congratulations #{@new_user_name}!  Enjoy your new car!"
         else
             puts "Oh well, try again to search for another car."
         end
@@ -109,11 +119,12 @@ class AppCLI
         review_yes = prompt.select("Would you like to leave a review of your experience at Flatiron Motors?", %w(Yes No))
         if review_yes == "Yes"
             prompt2 = TTY::Prompt.new
-            review = prompt2.select("How many stars?", %w(1 2 3 4 5))
+            @review = prompt2.select("How many stars?", %w(1 2 3 4 5))
+            puts "Thanks!  Goodbye!"
         else
-            puts "Okay!"
+            puts "Okay, Goodbye!"
         end
-        puts "Thanks!  Goodbye!"
+        
     end
 
 end
