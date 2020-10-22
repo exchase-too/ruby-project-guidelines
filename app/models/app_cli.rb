@@ -1,5 +1,11 @@
 class AppCLI
 
+    @@new_user_name = nil
+
+    def self.new_user_name
+        @@new_user_name
+    end
+
     def welcome_message
         puts
         puts "░██╗░░░░░░░██╗███████╗██╗░░░░░░█████╗░░█████╗░███╗░░░███╗███████╗  ████████╗░█████╗░"
@@ -20,21 +26,13 @@ class AppCLI
 
     def get_user_name
         print "Please enter your name, and we'll begin: "
-        @new_user_name = gets.chomp
+        @@new_user_name = gets.chomp
     end
 
-    # --------BRANCHING LOGIC GOES HERE---------
-    # if @new_user_name == "super_user"
-    #     branch to super user mode
-    # else
-    #     continue in regular user mode
-    # end
-    # --------END-------------------------------
-
     def create_user
-        @new_user = User.create(name: @new_user_name)
+        @new_user = User.create(name: @@new_user_name)
         puts ""
-        puts "Hello, #{@new_user.name}!  Let's get started!"
+        puts "Hello, #{@@new_user_name}!  Let's get started!"
         puts ""
     end
 
@@ -42,6 +40,14 @@ class AppCLI
         prompt = TTY::Prompt.new
         @new_car_type = prompt.select("What kind of car are you looking for?", %w(Sedan Coupe Minivan Truck))
     end
+
+    #def budget2
+    #   prompt.slider("Budget", min: 15000, max: 100000, default: 15000, help: "(Move arrows left and right to set budget max)", show_help: :always)
+    #
+    #
+    #
+    #
+    #
 
     def budget
         prompt = TTY::Prompt.new
@@ -98,33 +104,39 @@ class AppCLI
         puts "The price is $#{@success_car.price}"
         puts ""
         puts "With tax, your total comes to $#{sprintf("%.2f", @success_car.price * 1.0825)}"
+        puts ""
     end
 
     def confirm_purchase
         prompt = TTY::Prompt.new
         @confirm_new_purchase = prompt.select("Would you like to complete the transaction?", %w(Yes No))
+        puts ""
     end
 
     def create_purchase
         if @confirm_new_purchase == "Yes"
             @new_purchase = Purchase.create(car_id: @success_car.id, user_id: @new_user.id)
-            puts "Congratulations #{@new_user_name}!  Enjoy your new car!"
+            puts "Congratulations #{@@new_user_name}!  Enjoy your new car!"
+            puts ""
         else
             puts "Oh well, try again to search for another car."
+            puts ""
         end
     end
 
     def prompt_for_review
         prompt = TTY::Prompt.new
         review_yes = prompt.select("Would you like to leave a review of your experience at Flatiron Motors?", %w(Yes No))
+        puts ""
         if review_yes == "Yes"
             prompt2 = TTY::Prompt.new
             @review = prompt2.select("How many stars?", %w(1 2 3 4 5))
+            puts ""
             puts "Thanks!  Goodbye!"
         else
+            puts ""
             puts "Okay, Goodbye!"
         end
-        
     end
 
 end
