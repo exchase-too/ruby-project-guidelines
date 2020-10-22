@@ -14,3 +14,7 @@ new_user_welcome.budget
 # new_user_welcome.select_a_car_from_inventory
 new_user_welcome.what_color
 new_user_welcome.what_trim_level
+new_user_welcome.return_car
+new_user_welcome.confirm_purchase
+new_user_welcome.create_purchase
+new_user_welcome.prompt_for_review

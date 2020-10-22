@@ -21,9 +21,13 @@ class AppCLI
     def get_user
         print "Please enter your name, and we'll begin: "
         new_user_name = gets.chomp
-        new_user = User.create(name: new_user_name)
+        #if name = "super_user, do super_user_method"
+        #def SU_method
+        #welcome message
+        #TTY input - select an analylitc
+        @new_user = User.create(name: new_user_name)
         puts ""
-        puts "Hello, #{new_user.name}!  Let's get started!"
+        puts "Hello, #{@new_user.name}!  Let's get started!"
         puts ""
     end
 
@@ -34,7 +38,14 @@ class AppCLI
 
     def budget
         prompt = TTY::Prompt.new
-        @new_budget = prompt.select("What is your budget?", %w($0-$15,000 $15,000-$30,000 >$30,000))
+        temp = prompt.select("What is your budget?", %w($0-$15,000 $15,000-$30,000 >$30,000))
+        if temp == "$0-$15,000"
+            @new_budget = 15000.00
+        elsif temp == "$15,000-$30,000"
+            @new_budget = 30000.00
+        else
+            @new_budget = 30000.01
+        end
         puts ""
     end
 
@@ -69,5 +80,40 @@ class AppCLI
     #     # puts "Your bill with tax comes to $#{@car.price * 1.0825}."
     #     puts "Your bill with tax comes to $#{sprintf("%.2f", @car.price * 1.0825)}."
     # end
+    
+    def return_car
+        @success_car = Car.all.find {|car| car.car_type==@new_car_type && car.price<=@new_budget && car.color==@new_color && car.trim_level==@new_trim_level}
+        puts "SUCCESS!  Based on your search criteria, we've selected for you a #{@success_car.color} #{@success_car.model}, with #{@success_car.trim_level} trim package!"
+        puts ""
+        puts "The price is $#{@success_car.price}"
+        puts ""
+        puts "With tax, your total comes to $#{sprintf("%.2f", @success_car.price * 1.0825)}"
+    end
+
+    def confirm_purchase
+        prompt = TTY::Prompt.new
+        @confirm_new_purchase = prompt.select("Would you like to complete the transaction?", %w(Yes No))
+    end
+
+    def create_purchase
+        if @confirm_new_purchase == "Yes"
+            @new_purchase = Purchase.create(car_id: @success_car.id, user_id: @new_user.id)
+            puts "Congratulations!  Enjoy your new car!"
+        else
+            puts "Oh well, try again to search for another car."
+        end
+    end
+
+    def prompt_for_review
+        prompt = TTY::Prompt.new
+        review_yes = prompt.select("Would you like to leave a review of your experience at Flatiron Motors?", %w(Yes No))
+        if review_yes == "Yes"
+            prompt2 = TTY::Prompt.new
+            review = prompt2.select("How many stars?", %w(1 2 3 4 5))
+        else
+            puts "Okay!"
+        end
+        puts "Thanks!  Goodbye!"
+    end
 
 end
