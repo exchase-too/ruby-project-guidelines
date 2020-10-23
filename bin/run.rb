@@ -18,7 +18,7 @@ require_relative '../config/environment'
 
     def draw_prompt_table
         prompt = TTY::Prompt.new
-        @analytic = prompt.select("Please select from the following options:", %w(AverageStarRating TotalInventory PercentageOfPurchasesPerVisit AveragePriceOfPurchase TotalVisits Exit))
+        @analytic = prompt.select("Please select from the following options:", %w(TotalPurchases AverageStarRating TotalInventory PercentageOfPurchasesPerVisit AveragePriceOfPurchase TotalVisits Exit))
     end
 
     def average_star_rating
@@ -27,11 +27,6 @@ require_relative '../config/environment'
         puts ""
     end
 
-    def percentage_of_purchases_per_visit
-        puts ""
-        puts "The current percentage of purchases per visit to this app is 72%"
-        puts ""
-    end
 
     def average_price_of_purchase
         puts ""
@@ -41,7 +36,20 @@ require_relative '../config/environment'
 
     def total_visits
         puts ""
-        puts "The total number of visits to this app is 114."
+        puts "The total number of visits to this app is #{User.all.length}."
+        puts ""
+    end
+
+    def total_purchases
+        puts ""
+        puts "The total number of purchases made from this app is #{Purchase.all.length}."
+        puts ""
+    end
+
+    def percentage_of_purchases_per_visit
+        puts ""
+        ppv = ((Purchase.all.length.to_f / User.all.length.to_f) * 100).to_i
+        puts "The current percentage of purchases per visit to this app is #{ppv}%"
         puts ""
     end
     
@@ -69,6 +77,9 @@ require_relative '../config/environment'
                 draw_prompt_table
             elsif @analytic == "TotalVisits"
                 total_visits
+                draw_prompt_table
+            elsif @analytic == "TotalPurchases"
+                total_purchases
                 draw_prompt_table
             end
         end
