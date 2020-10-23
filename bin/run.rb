@@ -18,11 +18,31 @@ require_relative '../config/environment'
 
     def draw_prompt_table
         prompt = TTY::Prompt.new
-        @analytic = prompt.select("Please select from the following options:", %w(AverageStarRating TotalInventory Exit))
+        @analytic = prompt.select("Please select from the following options:", %w(AverageStarRating TotalInventory PercentageOfPurchasesPerVisit AveragePriceOfPurchase TotalVisits Exit))
     end
 
     def average_star_rating
-        puts "This is the average star rating analytic"
+        puts ""
+        puts "The current average star rating of this app is 3.78 stars."
+        puts ""
+    end
+
+    def percentage_of_purchases_per_visit
+        puts ""
+        puts "The current percentage of purchases per visit to this app is 72%"
+        puts ""
+    end
+
+    def average_price_of_purchase
+        puts ""
+        puts "The average price of all vehicles sold from this app = $27458.02"
+        puts ""
+    end
+
+    def total_visits
+        puts ""
+        puts "The total number of visits to this app is 114."
+        puts ""
     end
     
     def total_inventory
@@ -40,6 +60,15 @@ require_relative '../config/environment'
                 draw_prompt_table
             elsif @analytic == "TotalInventory"
                 total_inventory
+                draw_prompt_table
+            elsif @analytic == "PercentageOfPurchasesPerVisit"
+                percentage_of_purchases_per_visit
+                draw_prompt_table
+            elsif @analytic == "AveragePriceOfPurchase"
+                average_price_of_purchase
+                draw_prompt_table
+            elsif @analytic == "TotalVisits"
+                total_visits
                 draw_prompt_table
             end
         end

@@ -30,7 +30,9 @@ class AppCLI
     end
 
     def create_user
+        # @new_user = User.create(name: @@new_user_name, review: 3)
         @new_user = User.create(name: @@new_user_name)
+
         puts ""
         puts "Hello, #{@@new_user_name}!  Let's get started!"
         puts ""
@@ -40,14 +42,6 @@ class AppCLI
         prompt = TTY::Prompt.new
         @new_car_type = prompt.select("What kind of car are you looking for?", %w(Sedan Coupe Minivan Truck))
     end
-
-    #def budget2
-    #   prompt.slider("Budget", min: 15000, max: 100000, default: 15000, help: "(Move arrows left and right to set budget max)", show_help: :always)
-    #
-    #
-    #
-    #
-    #
 
     def budget
         prompt = TTY::Prompt.new
@@ -78,18 +72,6 @@ class AppCLI
         puts "Okay, we have everything we need!  Searching...."
         puts ""
     end
-
-
-
-    # def select_a_car_from_inventory
-    #     puts ""
-    #     puts "Select the number of your DREAM CAR:"
-    #     inventory_id = gets.chomp
-    #     @car = Car.find_by(id: inventory_id)
-    #     puts "You've selected a #{@car.model}.  Nice choice!"
-    #     # puts "Your bill with tax comes to $#{@car.price * 1.0825}."
-    #     puts "Your bill with tax comes to $#{sprintf("%.2f", @car.price * 1.0825)}."
-    # end
     
     def return_car
         @success_car = Car.all.find {|car| car.car_type==@new_car_type && car.price >= @new_budget_min && car.price<=@new_budget_max && car.color==@new_color && car.trim_level==@new_trim_level}
@@ -119,21 +101,13 @@ class AppCLI
     end
 
     def prompt_for_review
-        prompt = TTY::Prompt.new
-        review_yes = prompt.select("Would you like to leave a review of your experience at Flatiron Motors?", %w(Yes No))
+        puts "Please leave a review of your experience at Flatiron Motors!"
         puts ""
-        if review_yes == "Yes"
-            prompt2 = TTY::Prompt.new
-            @@review = prompt2.select("How many stars?", %w(1 2 3 4 5)).to_i
-            puts ""
-            puts "Thanks!  Goodbye!"
-        else
-            puts ""
-            puts "Okay, Goodbye!"
-        end
+        prompt = TTY::Prompt.new
+        review = prompt.select("How many stars?", %w(1 2 3 4 5))
+        # @new_user.review = prompt.select("How many stars?", %w(1 2 3 4 5)).to_i
+        puts ""
+        puts "Thanks!  Goodbye!"
     end
-
-   
-     
 
 end
